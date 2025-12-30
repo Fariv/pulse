@@ -177,14 +177,31 @@ Pulse assumes you want to **understand and control** your system.
 
 ## Example
 
+### Route defined
 ```php
-Pulse::route('GET', '/health', function ($req, $res, $ctx) {
-    return $res->json([
-        'status' => 'ok'
-    ]);
-});
+$app->get('/health', [HomeController::class, 'health']);
 ```
+### In Controller
+```php
+namespace App\Controllers;
 
+use Pulse\Core\App;
+use Pulse\Http\Request;
+use Pulse\Http\Response;
+
+class HomeController
+{
+    public function index(Request $req, $ctx): Response
+    {
+        $app = App::getInstance();
+
+        // Pass data to view
+        return $app->view('home', [
+            'title' => 'Welcome to Pulse'
+        ]);
+    }
+}
+```
 
 Here:
 
