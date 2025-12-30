@@ -1,7 +1,7 @@
 # Pulse
 
 **Pulse** is a lightweight PHP microframework built **specifically for OpenSwoole** and other **long-running PHP environments**.  
-It is developed using **PHP 8.5**, so it leverages the latest language features, performance improvements, and modern syntax.  
+It is developed using **PHP 8.4**, so it leverages the latest language features, performance improvements, and modern syntax.  
 
 Pulse helps you build fast, predictable APIs **without accidentally leaking memory or request state** — a common problem when moving from traditional PHP to OpenSwoole.
 
@@ -36,6 +36,40 @@ Pulse is **not** a good fit if you want:
 - “just works without understanding” abstractions
 
 If you want batteries included, Pulse is probably **not** the right tool.
+
+---
+
+## Quick Start with Docker/Podman
+
+For an **out-of-the-box experiment**, we’ve included a `Dockerfile` that lets you spin up a Pulse server **quickly**.  
+This way, you don’t have to worry about setting up the correct PHP 8.4 + OpenSwoole environment manually — everything is ready to go.
+
+### Steps to try Pulse:
+
+1. **Build the image**  
+```bash
+podman build -t pulse-dev .
+```
+
+2. **Run the container**
+```bash
+podman run -it --rm -p 9501:9501 pulse-dev
+```
+3. **Access the server**
+```bash
+http://localhost:9501/health
+```
+You should see a simple JSON response confirming the server is running
+
+Tip: You can mount your local Pulse code into the container for live development:
+
+```bash
+podman build -f docker/Dockerfile -t fariv/pulse:php8.4-swoole-multi .
+
+podman run -it --rm -p 9501:9501 fariv/pulse:php8.4-swoole-multi
+```
+
+This setup is ideal for quick experimentation, testing, or demos, and mirrors how Pulse may run in a real production environment.
 
 ---
 
@@ -173,6 +207,6 @@ nothing leaks into the next request
 
 ## Requirements
 
-- PHP 8.5+
+- PHP 8.4+
 - OpenSwoole
 - CLI environment (not PHP-FPM)
